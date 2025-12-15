@@ -12,3 +12,9 @@ All notable changes to this project will be documented in this file.
 - Initial project setup
 - Admin panel configured
 - Custom User model created
+### 2025-12-15
+- Add .env
+- fixed the database in postgerSQL
+- connected to DBeaver
+- added docker-compose.yml
+- added Dockerfile
