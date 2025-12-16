@@ -18,3 +18,8 @@ All notable changes to this project will be documented in this file.
 - connected to DBeaver
 - added docker-compose.yml
 - added Dockerfile
+
+
+### 2025-12-15
+- fixed the wallet and registration 
+- fixed the user and registration 
