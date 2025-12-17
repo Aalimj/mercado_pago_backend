@@ -26,3 +26,16 @@ All notable changes to this project will be documented in this file.
 
 ### 2025-12-17
 - adding User login endpoint (`POST /api/v1/users/login/`)
+
+## [Unreleased]
+
+### Added
+- User login endpoint with JWT authentication (access + refresh tokens)
+- Protected profile endpoint (`/api/v1/users/profile/`)
+- JWT-based authentication using `djangorestframework-simplejwt`
+### Changed
+- Switched REST framework authentication from SessionAuthentication to JWTAuthentication
+- Improved authentication flow for mobile and frontend clients
+
+### Security
+- Secured protected endpoints to require a valid JWT access token

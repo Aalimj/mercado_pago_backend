@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model,authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
 from wallets.models import Wallet
+from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
@@ -62,5 +63,10 @@ class LoginSerializer(serializers.Serializer):
         if not user.is_active:
             raise serializers.ValidationError("User is disabled")
         
+        refresh = RefreshToken.for_user(user)
+
         attrs["user"] = user
         return attrs
+        
+      
+
