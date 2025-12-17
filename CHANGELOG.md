@@ -23,3 +23,6 @@ All notable changes to this project will be documented in this file.
 ### 2025-12-15
 - fixed the wallet and registration 
 - fixed the user and registration 
+
+### 2025-12-17
+- adding User login endpoint (`POST /api/v1/users/login/`)
