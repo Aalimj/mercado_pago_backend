@@ -9,6 +9,8 @@ from .serializers import LoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from wallets.serializers import WalletSerializer
+
 
 
 class RegisterView(generics.CreateAPIView):
@@ -20,6 +22,9 @@ class RegisterView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
+        wallet = user.wallet
+        wallet_data = WalletSerializer(wallet).data
+
         return Response(
             {
                 "user": {
@@ -27,6 +32,7 @@ class RegisterView(generics.CreateAPIView):
                     "email": user.email,
                     "name": user.name,
                 },
+                "wallet": wallet_data,
                 "message": "User registered successfully.",
             },
             status=status.HTTP_201_CREATED,

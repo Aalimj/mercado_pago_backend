@@ -42,7 +42,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
 
-        Wallet.objects.create(user=user)
+        
 
         return user
 

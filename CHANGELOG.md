@@ -39,3 +39,6 @@ All notable changes to this project will be documented in this file.
 
 ### Security
 - Secured protected endpoints to require a valid JWT access token
+
+### [] - 2025-12-18
+- added account number creating automatic
