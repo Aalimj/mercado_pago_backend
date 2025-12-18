@@ -42,3 +42,5 @@ All notable changes to this project will be documented in this file.
 
 ### [] - 2025-12-18
 - added account number creating automatic
+
+- 2025-12-18 - Added deposit to the wallet 

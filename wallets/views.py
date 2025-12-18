@@ -1,3 +1,49 @@
 from django.shortcuts import render
 
-# Create your views here.
+from django.db import transaction
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+
+from wallets.models.wallet import Wallet
+from wallets.models.transaction import Transaction
+from wallets.serializers import DepositSerializer
+
+class DepositView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @transaction.atomic
+    def post(self, request):
+        serializer = DepositSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        wallet = (
+            Wallet.objects
+            .select_for_update()
+            .get(user=request.user)
+        )
+
+        amount = serializer.validated_data["amount"]
+
+        wallet.balance += amount
+        wallet.save(update_fields=["balance"])
+
+        Transaction.objects.create(
+            wallet=wallet,
+            user=request.user,
+            amount=amount,
+            type=Transaction.Type.DEPOSIT,
+            reference="manual_deposit"
+        )
+
+        return Response(
+            {
+                "message": "Deposit successful",
+                "wallet":{
+                    "account_number": wallet.account_number,
+                    "balance": wallet.balance,
+                }
+            },
+            status=status.HTTP_200_OK
+        )
