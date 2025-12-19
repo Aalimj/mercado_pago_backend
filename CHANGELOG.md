@@ -45,7 +45,7 @@ All notable changes to this project will be documented in this file.
 
 - 2025-12-18 - Added deposit to the wallet, serializer and end point
 
-## [Unreleased]
+## [Unreleased] 2025-12-19
 
 ### Added
 - Wallet deposit endpoint (`POST /api/v1/wallets/deposit/`)
@@ -53,3 +53,11 @@ All notable changes to this project will be documented in this file.
 - Automatic wallet creation on first deposit
 - Deposit transaction logging
 - Input validation via `DepositSerializer`
+
+## [Unreleased] - 2025-12-19
+
+### Added
+- Withdraw endpoint for wallets
+- Atomic balance update using database transactions
+- Insufficient balance validation on withdraw
+- Transaction record creation for withdraw operations
