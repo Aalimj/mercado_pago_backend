@@ -63,5 +63,9 @@ All notable changes to this project will be documented in this file.
 - Transaction record creation for withdraw operations
 
 ### Added 
-- pytext and test for deposit 
-- created withdraw test for withdrawing 
+
+-2026-06-01- pytext and test for deposit 
+-2026-06-01- created withdraw test for withdrawing 
+
+### Added 
+- 2026-06-01- Added transfer between account recieve account and send account 

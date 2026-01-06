@@ -24,3 +24,17 @@ class WithdrawSerializer(serializers.Serializer):
         decimal_places=2,
         min_value=Decimal("0.01")
     )
+
+class TransferSerializer(serializers.Serializer):
+    receiver_account_number = serializers.CharField(max_length=20)
+    amount = serializers.DecimalField(
+        max_digits=12, decimal_places=2, min_value=Decimal("0.01")
+    )
+
+    def validate_receiver_account_number(self, value):
+        try:
+            reciever_wallet = Wallet.objects.get(account_number=value)
+        except Wallet.DoesNotExist:
+            raise serializers.ValidationError("Receiver wallet not found.")
+        return value
+    
