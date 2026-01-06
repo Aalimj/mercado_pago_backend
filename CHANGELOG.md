@@ -61,3 +61,6 @@ All notable changes to this project will be documented in this file.
 - Atomic balance update using database transactions
 - Insufficient balance validation on withdraw
 - Transaction record creation for withdraw operations
+
+### Added 
+- pytext and test for deposit 
