@@ -64,3 +64,4 @@ All notable changes to this project will be documented in this file.
 
 ### Added 
 - pytext and test for deposit 
+- created withdraw test for withdrawing 
