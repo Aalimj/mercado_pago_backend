@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from wallets.models import Wallet
 from decimal import Decimal
+from rest_framework import serializers
+from wallets.models.transaction import Transaction
 
 class WalletSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,4 +39,16 @@ class TransferSerializer(serializers.Serializer):
         except Wallet.DoesNotExist:
             raise serializers.ValidationError("Receiver wallet not found.")
         return value
+    
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = [
+            "id",
+            "amount",
+            "type",
+            "reference",
+            "created_at",
+            "wallet_id"
+        ]
     

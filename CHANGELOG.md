@@ -70,3 +70,6 @@ All notable changes to this project will be documented in this file.
 ### Added 
 - 2026-01-06- Added transfer endpoint between account recieve account and send account 
 - 2026-01-07 - Fixed the transfer endpoint and checked the operation in postman
+-  2026-01-07 -Transaction history endpoint for user wallets
+-  2026-01-07 -Transaction types: deposit, withdraw, transfer_in, transfer_out
+-  2026-01-07 - Atomic balance updates for financial consistency
