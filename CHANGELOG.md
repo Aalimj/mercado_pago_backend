@@ -68,4 +68,5 @@ All notable changes to this project will be documented in this file.
 -2026-06-01- created withdraw test for withdrawing 
 
 ### Added 
-- 2026-06-01- Added transfer between account recieve account and send account 
+- 2026-01-06- Added transfer endpoint between account recieve account and send account 
+- 2026-01-07 - Fixed the transfer endpoint and checked the operation in postman

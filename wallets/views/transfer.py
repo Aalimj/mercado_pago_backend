@@ -16,45 +16,69 @@ class TransferView(APIView):
         serializer = TransferSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        sender_wallet = Wallet.objects.select_for_update().get(user=request.user)
-        receiver_wallet = Wallet.objects.get(
-            account_number = serializer.validated_data["receiver_account_number"]
-        )
         amount = serializer.validated_data["amount"]
+        receiver_account = serializer.validated_data["receiver_account_number"]
 
-        if sender_wallet.id == receiver_wallet.id:
-            return Response({"detail":"Cannot transfer to yourself"}, status=400)
-        
         with transaction.atomic():
+
+            sender_wallet = (
+                Wallet.objects
+                .select_for_update()
+                .get(user=request.user)
+
+            )
+
+            try:
+                receiver_wallet = (
+                    Wallet.objects
+                    .select_for_update()
+                    .get(account_number=receiver_account)
+                )
+            except Wallet.DoesNotExist:
+                return Response(
+                    {"detail": "Receiver wallet not found"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            if sender_wallet.id == receiver_wallet.id:
+                return Response(
+                    {"detail": "Cannot transfer to yourself"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
             if sender_wallet.balance < amount:
-                return Response({"detail": "Insufficient balance"}, status = 400)
+                return Response(
+                    {"detail": "Insufficient balance"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
             
             sender_wallet.balance -= amount
             sender_wallet.save(update_fields=["balance"])
+
             Transaction.objects.create(
                 wallet=sender_wallet,
                 user=request.user,
                 amount=amount,
-                type=Transaction.type.TRANSFER_OUT,
+                type=Transaction.Type.TRANSFER_OUT,
                 reference=f"transfer_to_{receiver_wallet.account_number}"
             )
-            
+
             receiver_wallet.balance += amount
             receiver_wallet.save(update_fields=["balance"])
+
             Transaction.objects.create(
                 wallet=receiver_wallet,
                 user=receiver_wallet.user,
                 amount=amount,
-                type=Transaction.type.TRANSFER_IN,
+                type=Transaction.Type.TRANSFER_IN,
                 reference=f"transfer_from_{sender_wallet.account_number}"
             )
-
+        
         return Response(
             {
-                "message":"Transfer successful",
+                "message": "Transfer successful",
                 "sender_balance": sender_wallet.balance,
-                "reciever_account": receiver_wallet.account_number,
-                "amount_transferred":amount,
+                "receiver_account": receiver_wallet.account_number,
+                "amount_transferred": amount,
             },
             status=status.HTTP_200_OK
         )
