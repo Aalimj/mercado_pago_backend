@@ -75,3 +75,4 @@ All notable changes to this project will be documented in this file.
 - 2026-01-07 - Atomic balance updates for financial consistency
 
 - 2026-01-07  Scheduled / Recurring Transfers engine: Automatically transfer from wallets to wallets , schedualtransfer, transfer out, in
+- 2026-01-07 Added test for transfere 
